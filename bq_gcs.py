@@ -20,7 +20,7 @@ from airflow.providers.google.cloud.transfers.bigquery_to_gcs import BigQueryToG
 # --------------------------------------------------------------------------------
 LOCAL_TZ = pendulum.timezone("Europe/Amsterdam")
 
-DAG_NAME = "merklenl_leenbakker_bq_gcs_canopydeploy"# DAG name (proposed format: lowercase underscore). Should be unique.
+DAG_NAME = "bq_gcs"# DAG name (proposed format: lowercase underscore). Should be unique.
 DAG_START_DATE = datetime.datetime(2023, 4, 1, tzinfo=LOCAL_TZ) # Startdate. When setting the "catchup" parameter to True, you can perform a backfill when you insert a specific date here like datetime(2021, 6, 20)
 DAG_SCHEDULE_INTERVAL = "0 9 * * *" # Cron notation -> see https://airflow.apache.org/scheduler.html#dag-runs
 DAG_CATCHUP = False # When set to true, DAG will start running from DAG_START_DATE instead of current date
@@ -48,18 +48,18 @@ default_dag_args = {
 
 AIRFLOW_TEMP_FOLDER = "/home/airflow/gcs/data/{}/".format(DAG_NAME)
 
-GCP_CONNECTION_ID = 'gcp_merkle_airflow'
-GCP_GCS_BUCKET = 'lb-gcs-export-canopy'
-GCP_BQ_PROJECT = 'future-cabinet-206910'
+GCP_CONNECTION_ID = 'xxxx'
+GCP_GCS_BUCKET = 'xxxx'
+GCP_BQ_PROJECT = 'xxxx'
 
 GCP_BQ_EXPORTS = [{
 	"name": "campaign_boxspring",
 	"sql": """
-		SELECT * FROM `future-cabinet-206910.lb_analysis.customer_life_cycle_view` WHERE order_date = '{run_date}'
+		SELECT * FROM `project.dataset.table` WHERE order_date = '{run_date}'
 	""",
-	"table": "future-cabinet-206910.lb_activation_export.canopy_boxspring",
-	"folder": "campaign_boxspring",
-	"file_name": "cs_boxspring_NL_"
+	"table": "project.dataset.table",
+	"folder": "folder_name",
+	"file_name": "file_name"
 }]
 
 # --------------------------------------------------------------------------------
